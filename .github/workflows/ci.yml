@@ -25,7 +25,7 @@ jobs:
 
       # Сборка всего решения
       - name: Build
-        run: dotnet build -c Release --no-restore
+        run: dotnet build app/app.csproj -c Release --no-restore
 
       # Запуск тестов (явно только тестовый проект)
       - name: Run tests
