@@ -19,19 +19,19 @@ jobs:
         with:
           dotnet-version: "8.0.x"
 
-      # Восстановление всех проектов (без указания путей)
-      - name: Restore dependencies
-        run: dotnet restore
+  
+      - name: Restore app
+        run: dotnet restore src/app/app.csproj
 
-      # Сборка всего решения
-      - name: Build
-        run: dotnet build app/app.csproj -c Release --no-restore
+      - name: Restore tests
+        run: dotnet restore src/app.test/app.test.csproj
 
-      # Запуск тестов (явно только тестовый проект)
+      - name: Build app
+        run: dotnet build src/app/app.csproj -c Release --no-restore
+
       - name: Run tests
-        run: dotnet test app.test/app.test.csproj -c Release --no-build --logger "trx"
+        run: dotnet test src/app.test/app.test.csproj -c Release --no-build --logger "trx"
 
-      # Сохранение результатов тестов
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
